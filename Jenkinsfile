@@ -27,12 +27,12 @@ pipeline {
         success {
             emailext subject: "✅ Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                      body: "The build was successful! Check the artifacts here: ${env.BUILD_URL}/artifact/",
-                     to: 'your-email@gmail.com'
+                     to: 'saravind@sirahu.com'
         }
         failure {
             emailext subject: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                      body: "The build failed. Check the logs here: ${env.BUILD_URL}/console",
-                     to: 'your-email@gmail.com'
+                     to: 'saravind@sirahu.com'
         }
     }
 }
