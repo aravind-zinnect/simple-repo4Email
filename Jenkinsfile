@@ -23,23 +23,16 @@ pipeline {
         }
     }
 
-   post {
-    always {
-        script {
-            try {
-                echo "📧 Attempting to send email..."
-                emailext(
-                    to: 'saravind@sirahu.com',
-                    subject: "🔔 Build ${currentBuild.number} Status: ${currentBuild.currentResult}",
-                    body: "Build ${currentBuild.number} completed with status: ${currentBuild.currentResult}. Check details here: ${env.BUILD_URL}",
-                    attachLog: true
-                )
-                echo "✅ Email sent successfully."
-            } catch (Exception e) {
-                echo "❌ Email sending failed: ${e.getMessage()}"
-            }
+    post {
+        success {
+            emailext subject: "✅ Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                     body: "The build was successful! Check the artifacts here: ${env.BUILD_URL}/artifact/",
+                     to: 'saravind@sirahu.com'
+        }
+        failure {
+            emailext subject: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                     body: "The build failed. Check the logs here: ${env.BUILD_URL}/console",
+                     to: 'saravind@sirahu.com'
         }
     }
-}
-
 }
